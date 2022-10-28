@@ -22,18 +22,29 @@ require 'csv'
     end
 
       $chosen_word = words_list.sample
+      $replacement_char = ''
+    def if_accurate
+        if $characters.to_s.include?($guess)
+          $replacement_char = $characters.gsub($guess)
+        elsif $characters.exclude?($guess)
+          puts "The letter wasn't in the word, try again \n \n"
+          play_round
+      end
+    end
+
+    randomize = $chosen_word.scan /\w/
+    $characters = randomize.join('')
 
     def play_round
-     # $characters = $chosen_word.scan /\w/
-      $replacement_char = ''
-
-
         until $replacement_char.length === $chosen_word.length do
-          $replacement_char << '_ '
+          $replacement_char << '_'
         end
 
-      puts $replacement_char
-      guess = gets.chomp.downcase
+      puts "\n The word is #{$replacement_char} #{$replacement_char.length} characters long \n \n"
+      puts "What's your guess?"
+      guessed = gets.chomp
+      $guess = guessed.downcase
+      if_accurate()
     end
 
     def play
@@ -52,14 +63,6 @@ require 'csv'
             play()
           end
       end
+
     play()
 
-
-    def if_accurate
-      if guess.include?($characters)
-        $replacement_char = $characters.gsub(Guess)
-
-      elsif Guess.include?($character) == false
-        play_round
-    end
-  end
