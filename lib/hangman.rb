@@ -8,7 +8,6 @@
   # Allow saving state of the game
   # Add ability to load saved game
 require 'csv'
-require 'erb'
 
   class Game
     attr_accessor :guess, :display
@@ -25,12 +24,15 @@ require 'erb'
       $chosen_word = words_list.sample
 
     def play_round
-      characters = $chosen_word.scan()
-      replacement_char = []
-        until replacement_char === characters
-          replacement_char.push['_']
-        puts replacement_char
+     # $characters = $chosen_word.scan /\w/
+      $replacement_char = ''
+
+
+        until $replacement_char.length === $chosen_word.length do
+          $replacement_char << '_ '
         end
+
+      puts $replacement_char
       guess = gets.chomp.downcase
     end
 
@@ -54,10 +56,10 @@ require 'erb'
 
 
     def if_accurate
-      if guess.include?(characters)
-        replacement_char = characters.gsub(Guess)
+      if guess.include?($characters)
+        $replacement_char = $characters.gsub(Guess)
 
-      elsif Guess.include?(character) == false
+      elsif Guess.include?($character) == false
         play_round
     end
   end
